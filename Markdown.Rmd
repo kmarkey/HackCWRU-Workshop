@@ -1,365 +1,873 @@
 ---
-title: "R Workshop 2022"
-subtitle: "CWRU Hack-athon" 
-author: "Keaton Markey"
+title: "A Taste of R, the tidyverse, and Machine Learning"
+subtitle: "2022 R CWRU Hackathon Workshop" 
+author: "Author: Keaton Markey"
 date:  "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   bookdown::html_document2:
     toc: true
     toc_depth: 4
     fig_caption: true
-fontsize: 12pt
-number_sections: true
+    toc_float: true
+    theme: yeti
+    df_print: kable
+    number_sections: false
+fontsize: 12
+theme: "yeti"
+number_sections: false
 geometry: "left=1cm,right=1cm,top=1.5cm,bottom=1.5cm"
 always_allow_html: yes
-header-includes:
-- \usepackage[section]{placeins}
-- \usepackage{fixltx2e}
-- \usepackage{longtable}
-- \usepackage{pdflscape}
-- \usepackage{graphicx}
-- \usepackage{caption}
-- \usepackage{gensymb}
-- \usepackage{subcaption}
-- \DeclareUnicodeCharacter{2264}{$\pm$}
-- \DeclareUnicodeCharacter{2265}{$\geq$}
-- \usepackage{fancyhdr}
-- \usepackage{lipsum}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-
-```{r setup, include=FALSE}
-library(tidyverse)
-
-```
 
 # Introduction
 
-R is an integrated suite of software facilities built by statisticians used for:
-  - data manipulation
-  - calculation
-  - graphical display
-  - an effective data handling and storage facility
-  - a suite of operators for calculations on arrays, in particular matrices
-  - a large, coherent, integrated collection of intermediate tools for data analysis
-  - a well developed, simple and effective programming language (called ‘S’) which includes:
-    - conditionals
-    - loops
-    - user defined recursive functions
-    – input and output facilities.
+R is an integrated suite of software facilities built by statisticians
+used for
 
-Some other extensions of R that people commonly use:
-  - RStudio (this is what you're looking at)
-  - RMarkdown (using Latex)
-  - Supported packages (dplyr, ggplot, magrittr)
-  - and more packages (github, BioConductor)
-  - whole package universes (tidyverse)
-  - applications (shiny apps)
-  - presentations
-  - and more!
+-   data manipulation
   
-R is currently in version 4.1.3
-  
-For data science R can do just about everything that python can--and there are many similarities between the two. Recently, there has been more and more interest in combining the strengths of both languages to do better data science.
+-   calculation
 
-R was originally built for stats, but has evolved to excel at many parts of data science.
+-   graphics
+
+-   data handling and storage
+
+-   operations on arrays, matrices
+
+At its beginning, R was designed for stats, but now its a fully-fledged
+programming language. Some other features of R:
+
+-   a large integrated collection of intermediate tools for data
+    analysis
+
+-   a well-developed, simple and effective programming language (called
+    `S`) which includes:
+
+-   conditionals
+
+-   loops
+
+-   user defined recursive functions
+
+-   input and output facilities
+
+R comes with a lot of bells and whistles built in, but one of the things
+I like most about it is the wealth of add-ons that are out there. Some
+extensions of R that people commonly use:
+
+-   RStudio (a development environment)
+-   RMarkdown (markdown for R)
+-   Popular packages (dplyr, ggplot)
+-   and more packages (github, BioConductor)
+-   whole package ecosystems (tidyverse)
+-   applications (shiny)
+-   presentations
+-   and more!
+
+For data science, R and python are the most widely used languages. There
+are many similarities between the two. Developers can even combine the
+strengths of both languages to do better data science.
 
 # R Basics
 
-In my opinion, there are really two kinds of R. Base R, and the tidyverse.
+In most people's opinion, there are really two kinds of R:
 
-```{r}
-# base R
+-   The more basic that comes installed with R (base R)
+-   and the tidyverse.
+
+In most cases, base R works just fine, but the tidyverse supplies a
+bunch of other functions (sometimes called `verbs`) that are designed to
+make it easier to write and edit code.
+
+To grasp some of the basic principles in R, we'll fist use base R, and
+then demonstrate some of the capabilities of the tidyverse.
+
+## Creating Objects:
+
+```{r creating objects}
+# We're using base R
 
 ## 1-dimensional objects
 
-# character vector = array
-vector1 <- c("a", "b", "c")
+# First we'll create an object. An object is pretty much anything that is stored in R
+# Objects can have many characteristics. Objects can be very large, such as a big excel file, or very small, such as a single number # Here is a simple type of object, a vector (similar to an array if you're familiar with those)
+# This code tells R to store the vector with 3 numbers in an object called "vector1"
+
+vector1 <- c(1, 2, 3)
+```
+
+```{r}
+# Now this vector is stored in R. We can "call" the object by just typing out the name
+
 vector1
+```
+
+```{r}
+# This is different than printing out the object. Although it might look the same, printing is only used for the purpose of seeing stuff. Calling an object means that you want to interact with it.
+
 print(vector1)
+
+# One of the characteristics of any object in R is it's class. We can get rhe class by applying the function "class()"
+# Functions are really important in programming. The define a set of operations that are performed on whatever is inside the function
+# Here, R is telling us that it recognizes the elements as numeric
+
 class(vector1)
+```
+
+## Indexing
+
+```{r indexing}
+
+# Now that we have this object "vector1", we can view different parts of it. A vector is what is known as a on-dimensional object
+# If you think about a vector like an spreadsheet, a vector would only be stored across one axis, either in a row or a column, hence the term one-dimensional
+# To view a certain part of (most) one-dimensional objects, we do what's called indexing. Indexing identifies each element as having a order in the vector that doesn't change unless we want it to
+
+# To get the first element of this vector, we can call the object, and then index the first element like so
 
 vector1[1]
-vector1[2,3] # Doesn't work
+```
+
+```{r, error=TRUE}
+# What if we want the last two elements?
+
+vector1[2,3]
+```
+
+```{r}
+# The comma inside the brackets tells R to start looking in another dimension. Since this is a one-dimensional object, this fails
+# To get the last two elements, we have to pass their indexes as another vector!
+
 vector1[c(2,3)]
 
-# numeric vector = array
-vector2 <- c(1, 2, 3)
-vector2
-class(vector2)
+```
 
-# list
-list1 <- c("crowd" = "a", b = 12, c = "seven")
+## Lists
+
+```{r}
+# Another type of object is called a list. These are preferred when you want to name each element
+# While vectors must have elements of all the same class, lists can hold anything, even other objects!
+# This is bad practice, but you don't even have to name every element
+
+list1 <- c(crowd = "a", b = 12, vector1)
+
+# When we created the list, R automatically separated "vector1" into each element
+
 list1
+```
 
-list1[1]
-list1[2] + 1 # Doesn't work
-as.numeric(list1[2]) + 1
+```{r, error=TRUE}
+# Lets grab the second element and add a number
+
+list1[2] + 12
+```
+
+```{r}
+# Before we do an operation, we need to make sure R recognizes everything as a number
+# To do that, we need to apply a function to our object to make it of numeric class
+
+as.numeric(list1[2]) + 12
+
+# That's better. There are lots of conversion functions:
 # as.character
 # as.numeric
 # as.factor etc.
-
-# factor
-factor1 <- factor(c("a", "b", "c", "b", "b"))
-factor1
-list(factor1)
-
-factor1[3]
-factor1["a"] # Doesn't work
-levels(factor1)
-
-## two-dimensional objects
-
-# martix
-matrix1 <- matrix(data = c(vector1, vector2), ncol = 2)
-matrix1
-class(matrix1)
-
-matrix1[3,1]
-matrix1[6]
-matrix1[1,]
-
-# data frame = table
-dataframe1 <- data.frame(col1 = c(matrix1, 78, 44), col2 = 1:8)
-dataframe1
-class(dataframe1)
-
-dataframe1$col2
-dataframe1[3,]
 ```
 
-# Data Cleaning
-
-We've got basic structures under our belt, lets get to the cool stuff.
-
-You can clean  + manipulate data in R very easily, and in my opinion, quite intuitively too. I like using the tidyverse, but here I show both base R and tidyverse methods.
-
-```{r tidyr}
-# tidyverse
-data("mtcars")
-class(mtcars)
-
-# standard head() function
-head(mtcars)
-glimpse(mtcars)
-
-# filter
-# I just want to see rows with this value
-mtcars$mpg
-mtcars$mpg <= 15
-mtcars[mtcars$mpg <= 15,]
-dplyr::filter(mtcars, mpg <= 15)
-
-# select
-# I only want columns with this name
-mtcars[,c("disp", "wt")]
-dplyr::select(mtcars, disp, wt)
-
-# mutate
-# I want to change a variable
-mtcars$plums <- mtcars$disp / mtcars$cyl
-print(mtcars$plums)
-dplyr::mutate(mtcars, plums = disp - cyl)
-
-# Row-dependent mutate
-mtcars["pears"] <- ifelse(mtcars$cyl == 8, mtcars$disp / mtcars$cyl, 0)
-print(mtcars[,c("pears", "plums")])
-dplyr::mutate(mtcars, pears = ifelse(cyl == 8, disp / cyl, 0))
-```
-The tidyverse is home to other methods as well:
-
-  - The pipe operator and others from {magrittr} %>%
-  - Plotting methods from {ggplot2}
-  - and other improved read/write, string, and object type abilities
-  
-# Visualization
-
-**base vs ggplot2**
+## Factors
 
 ```{r}
-#scatter
-plot(mtcars$hp, mtcars$mpg)
+# Speaking of factors: 
+# Factors are a type of object that takes elements and stores them in levels: unique values from all the elements
 
-ggplot(mtcars) + geom_point(aes(x = hp, y = mpg))
+factor1 <- factor(c("a", "b", "c", "b", "b"))
 
-#histogram
-hist(mtcars$cyl)
+# When we call a factor, we can see all its data and its levels
+factor1
 
-ggplot(mtcars) + geom_histogram(aes(x = cyl))
+class(factor1)
 ```
+
+## Matrices
+
+```{r}
+## two-dimensional objects
+
+# Now let's look at two-dimensional objects. The types that are most essential are matrices and data frames
+# A matrix is a simple table of stuff
+# Here we use the funstion "rnorm()" to generate data for our matrix
+
+matrix1 <- matrix(data = c(rnorm(5, 4), rnorm(5, 7)), ncol = 2) # ncol specifies how to separate the vectors
+
+matrix1
+```
+
+```{r}
+# To index this class of object, the column names and row names give us a pretty good idea
+# To get a specific element, index the row then column
+
+matrix1[3,1]
+```
+
+```{r}
+# Matrices can also be indexed as one-dimensional by supplying one index
+# The columns wrap to the next one
+
+matrix1[6]
+
+matrix1[1,2]
+```
+
+```{r}
+# TO get a full row or column, just leave the other dimension blank
+
+matrix1[1,]
+```
+
+## Data Frames
+
+```{r}
+# These are the bread and butter of data analytics. They are very similar to a matrix or data table, except they have extra rules
+# Here we create a dataframe (df for short) with two named columns (like a list!)
+
+dataframe1 <- data.frame(col1 = c(matrix1, 78, 44), col2 = 1:12)
+
+dataframe1
+
+class(dataframe1)
+```
+
+```{r}
+# Indexing these named columns is super easy with the "$" operator. This return a vector
+
+dataframe1$col1
+
+# You can also index like you do with matrices, but for columns the first method is preferred
+
+dataframe1[,1]
+```
+
+## Conditional Indexing
+
+```{r}
+# Now is a good time to talk about indexing an object by using a conditional representation of that object
+# That is, take a subset of the data based on the data itself
+
+# First we need to express a conditional using the "==" operator
+# This will tell us if objects in a vector are equal to the other side
+# For example, we can get R to tell us if each element is greater than 4
+
+greater_than_1 <- dataframe1$col1 > 4
+
+greater_than_1
+```
+
+```{r}
+# Here, we receive a vector of boolean (True or False) values. We can use this vector to index the original vector
+# So we only receive elements from col1 where greater_than_1 is equal to True
+
+dataframe1$col1
+
+dataframe1$col1[greater_than_1]
+
+# This is an extremely powerful tool in base R
+# You can also create other conditionals with ">=", "<=" and "!="
+```
+
+# Base R vs. tidyverse
+
+Now lets get to the cool stuff. We are gonna pick up the pace a little
+bit.
+
+You can manipulate and clean data frames in R very easily, and the
+tidyverse makes this quite intuitive. Base R handles elementary
+operations very well, but its in the higher order operations like data
+cleaning, manipulation, modeling, and graphics that the tidyverse
+shines.
+
+```{r tidyr}
+# Though a built-in package, we can import standard datasets as an object in our R session with ease
+# We don't have to assign the data as an object, R will do this for us
+
+data("mtcars")
+
+class(mtcars)
+```
+
+```{r}
+# Lets get some information about this data we just pulled using the "head()" function, which will show us the first few rows
+
+head(mtcars)
+```
+
+Here we see what we are working with. Take note of some of the column
+names, what kinds of values each column seems to take, and the row names
+as well.
+
+```{r}
+# Since mtcars is a dataframe, we can look at the "mpg" column using the "$" operator
+# We want to know the mean mpg of all the cars in this data using the "mean()" function
+
+mean(mtcars$mpg)
+```
+
+## Data Manipulation {.tabset .tabset-fade}
+
+Just like that. Now we'll do a slightly more complex series of
+calculations using base R and the tidyverse
+
+### Base R
+
+We can get the mean of the whole dataset, but often its more useful if
+we can take parts of the dataset and compare them. The mean mpg of
+certain categories can start to give information on how the category
+might affect the mpg.
+
+Lets look at the mean mpg of cars with 4 cylinders vs 6 cylinders. We'll
+do this two ways in base R.
+
+```{r}
+# First, the slower way
+# Index each group by the number of cylinders and
+# In English, this reads: "Take the mean mpg where the number of cylinders is equal to 4"
+
+mean(mtcars$mpg[mtcars$cyl == 4])
+
+# And for 6 cylinders
+
+mean(mtcars$mpg[mtcars$cyl == 6])
+```
+
+```{r}
+# Second, we can use a fancy function called "tapply()" which can apply a function to a column based on the groups in another vector
+
+tapply(mtcars$mpg, mtcars$cyl, mean)
+```
+
+What if we do another calculation using just two of the columns, `disp`
+and `wt`?
+
+Lets get the average displacement to weight ratio of all the cars.
+
+```{r}
+# Make a new object with all rows of the two columns named "disp" and "wt"
+
+mycols <- mtcars[, c("disp", "wt")]
+
+# Divide displacement by weight for each car and take the mean
+
+mean(mycols$disp / mycols$wt)
+```
+
+### tidyverse
+
+We can get the mean of the whole dataset, but often its more useful if
+we can take parts of the dataset and compare them. The mean mpg of
+certain categories can start to give information on how the category
+might affect the mpg.
+
+First, we need to introduce `%>%`, called the 'pipe' operator in the
+tidyverse. This is used to connect two pieces of code together, where
+the output of the code on the left is used as the input of the code on
+the right. This was created to prevent people from using nested
+functions.
+
+For example:
+
+```{r}
+library(tidyverse)
+
+class(mtcars)
+```
+
+is the same as
+
+```{r}
+mtcars %>%
+    
+    class()
+```
+
+One more concept in the tidyverse is lazy evaluation and data masking.
+This sounds fancy, but really all it means is that once we pass data to
+a tidyverse function, we don't have to call the data anymore, just the
+column that we are interested in. No more `data$column`! That's good for
+us because that's less typing and faster analysis.
+
+Okay, lets look at the mean mpg of cars with 4 cylinders vs 6 cylinders.
+To use the tidyverse, we can make use of its built-in functions that can
+tackle this exact problem.
+
+```{r}
+mtcars %>%
+
+# Here we take the data "mtcars" and use the "group_by()" function to group the data by the cyl value
+# The group is 'hidden' within the function, but have faith its there
+    
+    group_by(cyl) %>%
+  
+# Now we tell R to use the grouped df to take the mean of "mpg" based on each "cyl" group, independently of one another
+# Lastly we just create a new column for the mean.
+# We can easily create new columns inside "summarise()"  and "mutate()" with the "=" operator
+    
+    summarise(mean_mpg = mean(mpg))
+```
+
+```{r}
+# Without the pipe operator, that code would look like this:
+
+summarise(group_by(mtcars, cyl), mean_mpg = mean(mpg))
+
+# Not terrible, but with longs chains it can get messy fast, and we couldn't easily add comments between code
+```
+
+What if we do another calculation using just two of the columns, `disp`
+and `wt`?
+
+Lets get the average displacement to weight ratio of all the cars.
+
+```{r}
+# We can do this really fast!
+
+mtcars %>%
+    
+    summarise(avg_ratio = mean(disp/wt))
+```
+
+The tidyverse is home to other methods as well:
+
+-   The pipe operator and others from {magrittr} %\>%
+-   Plotting methods from {ggplot2}
+-   and other improved read/write, string, and object type abilities
+
+## Visualization {.tabset .tabset-fade}
+
+Plotting data is really important for analysis. Both base R and the
+tidyverse have pretty robust graphics capabilities. Here are the basics.
+
+### Base R
+
+The most basic type of plot is the scatter plot. This takes values from
+one column and values from another to put the points on a
+two-dimensional coordinate plane. Right out of the box, base R plots
+look fine.
+
+```{r}
+# Simple plots are pretty easy in base R
+# Call the "plot()" function and put in two same-sized vectors. 
+# Here we can make sure that the "plot()" function puts each object where we want by specifying them with a keyword
+# These keyword symbolize function arguments. Most functions take arguments, and its usually good to specify them with a keyword
+# In this case, we are telling R to use horsepower on the x axis and mpg on the y axis. We can supply our own labels too.
+
+plot(x = mtcars$hp, mtcars$mpg, xlab = "Horsepower", ylab = "MPG")
+```
+
+We can make a histogram too. `hist()` only takes one data argument and
+automatically counts each group
+
+```{r}
+hist(mtcars$cyl, xlab = "Cylinders", main = "Histogram of Cylinders")
+```
+
+### tidyverse
+
+The package responsible for handling most graphics in the tidyverse
+called ggplot2. ggplot2 uses a layering system to build a graph, where
+each layer supplies information that is just laid on top of the
+information that came previously. There are a few quirks to this package
+in terms of where and how you supply data and the language, but its easy
+to adjust to.
+
+```{r}
+# ggplot is in the tidyverse so it uses data masking and lazy evaluation
+# We can supply the data when we initialize a plot, with "ggplot()"
+
+ggplot(mtcars) + 
+    
+    # Then we create a geometry layer of points
+    # And supply aesthetics inside "aes()" where we can specify which columns are on the x axis and the y axis
+    
+    geom_point(aes(x = hp, y = mpg))
+
+```
+
+We can make a histogram too
+
+```{r}
+ggplot(mtcars) + geom_histogram(aes(x = cyl)) +
+      
+    # We can rename the axes here too with the "labs()" function
+    
+    labs(x = "Cylinders",
+         y = "Count",
+         title = "Histogram of Cylinders") +
+    
+    # Since the default ggplot theme is bare-bones, I usually throw on a built-in theme
+    
+    theme_classic()
+```
+
 # Machine Learning {.tabset}
 
-All models are wrong, but some are useful!
-
 There are two main classes of ML:
-[R-C](figs/regression-vs-classification-in-machine-learning.png)
 
-  - Regression
-    - Line of best fit
-    - Predicts a continuous variable
-    - It's the model's job to find parameters that minimize the distance between the line and the observed data
-  
-  - Classification
-    - Predicts discrete classes
-    - The model can find parameters that minimize the prediction of incorrect category labels (Decision Boundary)
-  
-### In practice
+![Regression and
+Classification](figs/regression-vs-classification-in-machine-learning.png)
 
-  - Use features to predict an outcome using training data
+-   Regression
+    -   Line of best fit
+    -   Predicts a continuous variable
+    -   It's the model's job to find parameters that minimize the
+        distance between the line and the observed data
+-   Classification
+    -   Predicts discrete classes
+    -   The model can find parameters that minimize the prediction of
+        incorrect category labels (Decision Boundary)
 
-  - Extract the model
+In its simplest form, and the form you will see in this tutorial, are 2
+steps to Machine Learning
 
-  - Use the model to predict new outcomes
+First, we get a framework to create a model. Broadly, a model is an
+object that contains a relationship between a sequence of inputs and
+outputs. The relationship can be extremely simple, such as in a linear
+model with two parameters, where the output has a direct linear
+relationship to the input, or extremely complex such as in a neural
+network with many parameters, where the output has an indirect
+non-linear relationship to the input. Typically, creating or "training"
+a model means establishing a relationship that best describes the
+output. Using an existing framework, you tell the program to create a
+relationship. Typically the relationship is restructured many times
+based on how well the output is described. Once it does a good-enough
+job, it stops.
 
-We will use Fitbit data, courtesy fo Gloria on Kaggle 
+Once the model is trained and a relationship is established, then we can
+give it new input and receive an expected output. There are many
+considerations, evaluations, and tests that should be made along the
+way, but the model should be generalization enough to produce insight
+into data not available for standard data analysis.
 
-[Fitbit Data](https://www.kaggle.com/datasets/gloriarc/fitbit-fitness-tracker-data-capstone-project)
+Using real data, lets see what ML looks like in R. I'll be using a
+combination of the tidyverse and base R for this, and I won't delve too
+deep into the exact methods I'm using.
 
+We'll go through some of the steps of creating a model:
+
+-   Cleaning up the data
+-   Visualizing relationships
+-   Training models
+-   Model evaluation
+
+We will use [Fitbit
+Data](https://www.kaggle.com/datasets/gloriarc/fitbit-fitness-tracker-data-capstone-project),
+courtesy of Gloria on Kaggle.
 
 ## Case 1 Linear/Polynomial Regression
 
-For this exercise, say we want to look at the relationship between the number of calories burned (**Calories**) and the distance that people traveled according to the device (**Tracker Distance**)
+For this exercise, we want to look at the relationship between the
+number of calories burned `Calories` and the distance that people
+traveled according to the device `TrackerDistance`.
 
 ```{r}
+# Read in the csv with "read_csv()" from the tidyverse
 
-# read in data
 fitbit <- read_csv("data/Daily_Activity_2022_27_02.csv")
 
-# view the data
-glimpse(fitbit)
-
-# plot our variables of interest
-plot(fitbit$TrackerDistance, fitbit$Calories)
-
-# no data manipulation required
-mod1 <- glm(Calories ~ `TrackerDistance`, data = fitbit)
-
-# get summary
-summary(mod1)
-
-# make a line
-range(fitbit$TrackerDistance)
-pred <- predict(mod1, data.frame(TrackerDistance = seq(0, 30, 0.1)), type = "response")
-predat1 <- data.frame(pred = pred, dist = seq(0, 30, 0.1))
-
-# polynomial model
-mod2 <- glm(Calories ~ poly(`TrackerDistance`, 3), data = fitbit)
-
-# summary
-summary(mod2)
-
-# another line
-range(fitbit$TrackerDistance)
-pred <- predict(mod2, data.frame(TrackerDistance = seq(0, 30, 0.1)), type = "response")
-predat2 <- data.frame(pred = pred, dist = seq(0, 30, 0.1))
-
-
-# plot all models and data
-ggplot() + geom_line(data = predat1, aes(x = dist, y = pred), color = "blue", size = 1.5, lty = 2) +
-  geom_line(data = predat2, aes(x = dist, y = pred), color = "red", size = 1.5, lty = 2) +
-  geom_point(data = fitbit, aes(x = TrackerDistance, y = Calories)) +
-  labs(x = "Tracker Distance", y = "Calories") +
-  theme_classic()
+# We can see all the classes of each column, very helpful!
 ```
+
+Exploring the data is the first step in any analytical process.
+
+```{r}
+# view the data with "glimpse()" from tidyverse
+
+glimpse(fitbit)
+```
+
+Let's see what our variables of interest look like.
+
+```{r}
+# plot our variables of interest
+
+plot(fitbit$TrackerDistance, fitbit$Calories, xlab = "Distance", ylab = "Calories")
+```
+
+### Linear Model
+
+We will create the simplest model first. This is a good idea just so we
+have room to improve from here
+
+```{r}
+# Use the "glm()" function to make a linear model. We supply the data and columns to use data masking
+# The "~" notation is a part of the relationship function
+# In English, this is: "Calories as a function of Tracker Distance"
+
+lmodel <- glm(Calories ~ `TrackerDistance`, data = fitbit)
+```
+
+Now that we have a model, we can view some information about it. This
+model is linear (we used `glm()`) and is using only one column to
+predict `Calories`
+
+```{r}
+# View a summary of the model
+
+summary(lmodel)
+```
+
+From this summary, we need to look at the coefficients to get an idea of
+what our model did, and review some statistics to evaluate it.
+
+This model created a linear relationship or linear function between the
+input and output. This means that the function we should expect to see
+will be in the form of `mx + b` (the function of a line) where `x` is
+`TrackerDistance`. The best relationship it could create says that
+`Calories` can be best estimated by 118.610 \* `TrackerDistance` +
+1654.77.
+
+Let's see what this looks like on a graph.
+
+```{r}
+ggplot(data = fitbit) +
+    
+    geom_point(aes(x = `TrackerDistance`, y = Calories)) +
+    
+    # Create a line with slope and intercept
+    
+    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", lwd = 3) + 
+    
+    # Add title and model call
+    
+    labs(title = "Linear Regression with Fitbit Data",
+         subtitle = lmodel$call) + 
+    
+    # Add a better theme
+    
+    theme_classic()
+```
+
+How many calories would we expect someone to burn if they ran 40 miles?
+
+```{r}
+# We could just plug the slope and intercept into an equation, but lets use R's "predict()" function for this
+# Since we just need one prediction, we can pass one value as a named list
+# Using the model, we supply this new data and specify that we want the type of prediction to be on the scale of the response variable
+
+pred <- predict(lmodel, newdata = list(TrackerDistance = 40), type = "response")
+
+pred
+```
+
+Based on the model, we should expect someone who ran 40 km to burn 6398
+calories.
+
+### Polynomial Model
+
+A linear model describes the relationship between the input and output
+with a linear function, but the relationship might be more complex. Lets
+try a different model.
+
+```{r}
+# Here we will use a polynomial model
+# This kind of model is a cousin of the linear model, and it looks very same
+# Instead of a linear function, this model optimizes a polynomial function
+
+pmodel <- glm(Calories ~ poly(`TrackerDistance`, 3), data = fitbit)
+
+# View summary
+
+summary(pmodel)
+```
+
+Here are the coefficeents of a polynomial relationship between
+`Calories` and `TrackerDistance`. According to the model,`Calories` is
+best described by -1286.74 \* `TrackerDistance`\^3 + -1688.80 \*
+`TrackerDistance`\^2 + 14201.32 \* `TrackerDistance` + 2303.61.
+
+When coefficients are calculated, we can get an estimate of how likely
+they are to exist as a predictor of the output. The colloquial threshold
+for this is 0.05. All of the relationships show a significance
+(`Pr(>|t|)`) below this threshold.
+
+Let's plot both models together.
+
+```{r}
+# We need to get line data for the polynomial model so we just use the existing data
+
+pred <- predict(pmodel, newdata = fitbit, type = "response")
+
+# Plot both models
+
+ggplot(data = fitbit) +
+    
+    geom_point(aes(x = `TrackerDistance`, y = Calories)) +
+    
+    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", lwd = 3) + 
+    
+    geom_line(aes(x = `TrackerDistance`, y = pred), color = "blue", lwd = 3) +
+    
+    # Add title and model call
+    
+    labs(title = "Linear and Polynomial Regression with Fitbit Data") + 
+    
+    # Add a better theme
+    
+    theme_classic()
+```
+
+The polynomial model seems to follow the linear model exactly until it
+follows three outliers and suggests that someone who runs more will
+actually start to burn fewer calories. Without comparing fit or
+residuals, we can conclude that the first linear model will perform
+better and will more accurately represent the relationship between
+`Calories` and `TrackerDistance`.
 
 ## Case 2 Logistic Regression
+
 ![Simple Logistic Regression](figs/Simple-Logistic-Regression.jpg)
-![Logistic Equation](figs/LogReg_1.png)
 
-Even though regression is in the name, it is used for binary classification:
-  - Is it black or white? Male or female? etc.
-  
-This model estimates the parameters of a logistic equation for the probability of an observation residing in a particular class.
+Even though regression is in the name, it is used for binary
+classification (TRUE/FALSE, white/black etc.).
 
-In this example, let's say we want to predict high or low calorie count using the day of the week and how far the user traveled.
+This model estimates the parameters of a logistic equation for the
+probability of an observation residing in a particular class.
 
+In this example, we want to predict high or low calorie count using the
+amount of time each participant spent in each activity state.
 
 ```{r}
+# We need to change the data a little bit for the model to work
+# Set a high/low threshold for calories
+# Use "mutate()" from the tidyverse
 
-# read in data
-fitbit <- read_csv("data/Daily_Activity_2022_27_02.csv")
-
-# data manipulation
-fitbit <- dplyr::mutate(fitbit, dvcal = ifelse(Calories >= 2000, "high", "low"))
-
-# view our new variable
-boxplot(fitbit$TrackerDistance ~ fitbit$dvcal, ylab = "Tracker Distance", xlab = "Calories Burned")
-
-# create the model
-mod1 <- glm(formula = factor(dvcal) ~ TrackerDistance, data = fitbit, family = "binomial")
-
-pred <- predict(mod1, data.frame(TrackerDistance = seq(0, 30, 0.1)), type = "response")
-predat <- data.frame(pred = pred, dist = seq(0, 30, 0.1))
-
-# view results
-summary(mod1)
-
-# plot them with ggplot
-ggplot() + geom_line(data = predat, aes(x = dist, y = pred), color = "blue", size = 1.5, lty = 2) +
-  geom_point(data = fitbit, aes(x = TrackerDistance, y = ifelse(dvcal == "high", 1, 0))) +
-  labs(x = "Tracker Distance", y = "Calories") +
-  theme_classic()
-
+fit_new <- mutate(fitbit, dvcal = ifelse(Calories >= 2000, "high", "low"))
 ```
 
-## Method 3 Random Forest
+```{r}
+# View our new column in a plot
+
+ggplot(fit_new) +
+    
+    geom_histogram(aes(x = dvcal, fill = dvcal), stat = "count") +
+    
+    labs(title = "Histogram of dvcal") + 
+    
+    theme_classic()
+```
 
 ```{r}
+# create the model
+
+y <- as.factor(fit_new$dvcal)
+
+logmodel <- glm(formula = y ~  SedentaryMinutes + LightlyActiveMinutes + FairlyActiveMinutes + VeryActiveMinutes, data = fit_new, 
+                family = "binomial")
+
+summary(logmodel)
+```
+
+Looking at the coefficients,`FairlyActiveMinutes` doesn't seem to be
+statistically significant. Let's evaluate the model to see if removing
+it will help the model perform better.
+
+```{r}
+# Retrieve a list of predicted values
+
+pred <- predict(logmodel, newdata = fit_new, type = "response")
+
+# Create confusion matrix
+
+cmat <- as.matrix(table(Actual_Values = y, Predicted_Values = round(pred)))
+
+# Get accuracy
+
+sum(diag(cmat))/sum(cmat)
+```
+
+```{r}
+# Create model without FairlyActiveMinutes
+
+logmodel2 <- glm(formula = y ~  SedentaryMinutes + LightlyActiveMinutes + VeryActiveMinutes, data = fit_new, 
+                family = "binomial")
+
+# Retrieve a list of predicted values
+
+pred <- predict(logmodel2, newdata = fit_new, type = "response")
+
+# Create confusion matrix
+
+cmat <- as.matrix(table(Actual_Values = y, Predicted_Values = round(pred)))
+
+# Get accuracy
+
+sum(diag(cmat))/sum(cmat)
+```
+
+The model without `FailryActiveMinutes` achieved a slightly better
+accuracy than the model with it.
+
+## Case 3 Random Forest
+
+A random forest is an extension of the decision tree class of models. In
+simple terms, a decision tree is a model that divides each feature into
+two groups that correspond to an output, where the size of each group
+and which features are chosen is optimized. A random forest creates
+dozens of unique decision trees and combines the outputs of each tree
+into a final estimation, a technique called ensemble modeling.
+
+Random forests can be used for classification or regression. In R, we
+need to load in a special package.
+
+```{r, results=FALSE, message=FALSE}
 library(caret)
 library(randomForest)
+```
 
-# using mtcars
-# some cleaning
+Lets try using a random forest to predict the calorie class of each
+workout session in the fitbit data.
 
-glimpse(fitbit)
+```{r}
+# First, since a random forest considers all the features, we will need to remove some that contain duplicate information or no information
 
-data <- dplyr::mutate(fitbit, aday = factor(ActivityDay)) %>% # as a factor
-  dplyr::select(-ActivityDay, -`...17`, -`...18`, -Id, -dvcal, -ActivityDate)
+data <- fit_new %>%
+    
+    dplyr::select(-Id, -ActivityDate, -Calories, -`...17`, -`...18`)
+```
 
-#10 folds repeat 3 times
-control <- trainControl(method = 'repeatedcv', 
-                        number = 10, 
-                        repeats = 3)
+The caret package has some neat tools to help us run our model. We also
+need to pick a hyper-parameter: `ntree`. This will tell the model how
+many trees it should make in the forest. Normally we would test
+different values for this hyper-parameter, but we will just use 50.
 
-#Metric compare model is Accuracy
+```{r}
+# Metric to compare models
+
 metric <- "Accuracy"
 
-# set seed for reproducibility
+# Setting a random seed in R is important for code reproducibility
+
 set.seed(123)
 
-# creating tuning grid
 # How many variables should each tree use?
-tunegrid <- expand.grid(.mtry = 1:10)
-rf_default <- train(aday ~ .,
+
+forest <- train(dvcal ~ .,
                     data = data, 
                     method = 'rf', 
-                    metric = 'Accuracy',
-                    tuneGrid = tunegrid, 
-                    trControl = control)
+                    metric = metric,
+                    ntree = 50)
 
-# view summary
-print(rf_default)
+# We can grab the accuracy directly from the model object
+# The model tried three different configurations, so that's why we see 3 rating for accuracy
 
-#plot results
-plot(rf_default)
+forest$results$Accuracy
 ```
 
+The accuracy of the random forest model is better than the logistic
+regression.
 
-## R Markdown
+# Thank You
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. Note that all your code must be void of errors before knitting. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Thanks for taking a look at this tutorial. You can check out a version of this document on [my Github Repo](https://github.com/kmarkey/HackCWRU-Workshop). Please check out the tidyverse
+and caret webpages to learn more about R, the tidyverse, and Machine
+Learning!
