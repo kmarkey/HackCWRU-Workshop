@@ -1,28 +1,27 @@
 ---
-title:
+layout: page
+title: R, the tidyverse, and Machine Learning
 subtitle: "CWRU Hackathon Workshop" 
 author: "Author: Keaton Markey"
-date:  "Spring 2022"
+date:  "Spring, 2022"
 output:
   github_document:
     toc: false
     toc_depth: 4
     df_print: kable
     number_sections: false
+output_file: "../hack-cwru-workshop.md"
 css: "assets/css/style.css"
-fontsize: 12
-geometry: "left=1cm,right=1cm,top=1.5cm,bottom=1.5cm"
-always_allow_html: yes
-editor_options: 
-  markdown: 
-    wrap: 72
+menubar_toc: true
+toc_title: TOC Title
+hero_height: is-fullwidth
 ---
 
 ```{r setup, results='hide', echo=FALSE}
 knitr::opts_chunk$set(class.source = "code-chunk")
 ```
 
-<link href="assets/css/style.css" rel="stylesheet"></link>
+<link href="assets/css/style.css" rel="stylesheet">
 
 This tutorial was prepared for a quick and dirty overview of R, some of
 its facets, and what machine learning looks like. It is assumed that you
