@@ -3,7 +3,6 @@ title: "A Taste of R, the tidyverse, and Machine Learning"
 subtitle: "CWRU Hackathon Workshop" 
 author: "Author: Keaton Markey"
 date:  "Spring 2022"
-remote_theme: chrisrhymes/bulma-clean-theme
 output:
   github_document:
     toc: false
@@ -18,6 +17,8 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+
+<link href="assets/css/style.css" rel="stylesheet"></link>
 
 ```{r setup, results='hide', echo=FALSE}
 knitr::opts_chunk$set(class.source = "code-chunk")
