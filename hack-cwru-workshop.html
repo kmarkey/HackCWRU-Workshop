@@ -1475,6 +1475,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">A Taste of R, the tidyverse, and Machine Learning</h1>
 <h3 class="subtitle">CWRU Hackathon Workshop</h3>
 <h4 class="author">Author: Keaton Markey</h4>
+<h4 class="date">Spring 2022</h4>
 
 </div>
 
@@ -1641,24 +1642,24 @@ matrix1 &lt;- matrix(data = c(rnorm(5, 4), rnorm(5, 7)), ncol = 2)
 
 matrix1</code></pre>
 <pre><code>##          [,1]     [,2]
-## [1,] 2.043013 5.941498
-## [2,] 5.776827 6.035142
-## [3,] 3.746308 8.181840
-## [4,] 4.430959 7.252064
-## [5,] 4.081634 7.100729</code></pre>
+## [1,] 4.801601 6.934881
+## [2,] 4.315457 5.606491
+## [3,] 3.293272 7.204853
+## [4,] 3.214569 7.229323
+## [5,] 5.184067 6.184061</code></pre>
 <p>To index this class of object, the column names and row names give us a
 pretty good idea. To get a specific element, index the row then column.</p>
 <pre class="r code-chunk"><code>matrix1[3,1]</code></pre>
-<pre><code>## [1] 3.746308</code></pre>
+<pre><code>## [1] 3.293272</code></pre>
 <p>Matrices can also be indexed as one-dimensional by supplying one index.
 The columns wrap to the next one.</p>
 <pre class="r code-chunk"><code>matrix1[6]</code></pre>
-<pre><code>## [1] 5.941498</code></pre>
+<pre><code>## [1] 6.934881</code></pre>
 <pre class="r code-chunk"><code>matrix1[1,2]</code></pre>
-<pre><code>## [1] 5.941498</code></pre>
+<pre><code>## [1] 6.934881</code></pre>
 <p>To get a full row or column, just leave the other dimension blank.</p>
 <pre class="r code-chunk"><code>matrix1[1,]</code></pre>
-<pre><code>## [1] 2.043013 5.941498</code></pre>
+<pre><code>## [1] 4.801601 6.934881</code></pre>
 </div>
 <div id="data-frames" class="section level2">
 <h2>Data Frames</h2>
@@ -1680,43 +1681,43 @@ class(dataframe1)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">2.043013</td>
+<td align="right">4.801601</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="right">5.776827</td>
+<td align="right">4.315457</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td align="right">3.746308</td>
+<td align="right">3.293272</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td align="right">4.430959</td>
+<td align="right">3.214569</td>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="right">4.081634</td>
+<td align="right">5.184067</td>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="right">5.941498</td>
+<td align="right">6.934881</td>
 <td align="right">6</td>
 </tr>
 <tr class="odd">
-<td align="right">6.035142</td>
+<td align="right">5.606491</td>
 <td align="right">7</td>
 </tr>
 <tr class="even">
-<td align="right">8.181840</td>
+<td align="right">7.204853</td>
 <td align="right">8</td>
 </tr>
 <tr class="odd">
-<td align="right">7.252064</td>
+<td align="right">7.229323</td>
 <td align="right">9</td>
 </tr>
 <tr class="even">
-<td align="right">7.100729</td>
+<td align="right">6.184061</td>
 <td align="right">10</td>
 </tr>
 <tr class="odd">
@@ -1733,13 +1734,13 @@ class(dataframe1)</code></pre>
 <p>Indexing these named columns is super easy with the “$” operator. This
 returns a vector.</p>
 <pre class="r code-chunk"><code>dataframe1$col1</code></pre>
-<pre><code>##  [1]  2.043013  5.776827  3.746308  4.430959  4.081634  5.941498  6.035142
-##  [8]  8.181840  7.252064  7.100729 78.000000 44.000000</code></pre>
+<pre><code>##  [1]  4.801601  4.315457  3.293272  3.214569  5.184067  6.934881  5.606491
+##  [8]  7.204853  7.229323  6.184061 78.000000 44.000000</code></pre>
 <p>You can also index like you do with matrices, but since it’s a
 dataframe, the first method is preferred.</p>
 <pre class="r code-chunk"><code>dataframe1[,1]</code></pre>
-<pre><code>##  [1]  2.043013  5.776827  3.746308  4.430959  4.081634  5.941498  6.035142
-##  [8]  8.181840  7.252064  7.100729 78.000000 44.000000</code></pre>
+<pre><code>##  [1]  4.801601  4.315457  3.293272  3.214569  5.184067  6.934881  5.606491
+##  [8]  7.204853  7.229323  6.184061 78.000000 44.000000</code></pre>
 </div>
 <div id="conditional-indexing" class="section level2">
 <h2>Conditional Indexing</h2>
@@ -1752,16 +1753,16 @@ element is greater than 4.</p>
 <pre class="r code-chunk"><code>greater_than_1 &lt;- dataframe1$col1 &gt; 4
 
 greater_than_1</code></pre>
-<pre><code>##  [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##  [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>Here, we receive a vector of boolean (True or False) values. We can use
 this vector to index the original vector. So we only receive elements
 from col1 where greater_than_1 is equal to True.</p>
 <pre class="r code-chunk"><code>dataframe1$col1</code></pre>
-<pre><code>##  [1]  2.043013  5.776827  3.746308  4.430959  4.081634  5.941498  6.035142
-##  [8]  8.181840  7.252064  7.100729 78.000000 44.000000</code></pre>
+<pre><code>##  [1]  4.801601  4.315457  3.293272  3.214569  5.184067  6.934881  5.606491
+##  [8]  7.204853  7.229323  6.184061 78.000000 44.000000</code></pre>
 <pre class="r code-chunk"><code>dataframe1$col1[greater_than_1]</code></pre>
-<pre><code>##  [1]  5.776827  4.430959  4.081634  5.941498  6.035142  8.181840  7.252064
-##  [8]  7.100729 78.000000 44.000000</code></pre>
+<pre><code>##  [1]  4.801601  4.315457  5.184067  6.934881  5.606491  7.204853  7.229323
+##  [8]  6.184061 78.000000 44.000000</code></pre>
 <p>This is an extremely powerful tool in base R. You can also create other
 conditionals with:</p>
 <ul>
