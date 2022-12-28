@@ -10,7 +10,7 @@ output:
     toc_depth: 4
     df_print: kable
     number_sections: false
-css: "/assets/css/style.css"
+css: "assets/css/style.css"
 fontsize: 12
 geometry: "left=1cm,right=1cm,top=1.5cm,bottom=1.5cm"
 always_allow_html: yes
