@@ -1,5 +1,5 @@
 ---
-title: "A Taste of R, the tidyverse, and Machine Learning"
+title:
 subtitle: "CWRU Hackathon Workshop" 
 author: "Author: Keaton Markey"
 date:  "Spring 2022"
@@ -18,11 +18,11 @@ editor_options:
     wrap: 72
 ---
 
-<link href="assets/css/style.css" rel="stylesheet"></link>
-
 ```{r setup, results='hide', echo=FALSE}
 knitr::opts_chunk$set(class.source = "code-chunk")
 ```
+
+<link href="assets/css/style.css" rel="stylesheet"></link>
 
 This tutorial was prepared for a quick and dirty overview of R, some of
 its facets, and what machine learning looks like. It is assumed that you
