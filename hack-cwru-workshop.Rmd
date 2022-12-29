@@ -1,10 +1,10 @@
 ---
 layout: page
 title: R, the tidyverse, and Machine Learning
-subtitle: "CWRU Hackathon Workshop" 
-author: "Author: Keaton Markey"
+subtitle: CWRU Hackathon Workshop
+description: tutorial, introduction, walk-thorugh, taste, test of R, the tidyverse, dplyr, ggplot, caret, machine learning, ml, rstudio, programming concepts and practice
+author: Keaton Markey
 date: "2022/12/28"
-css: "assets/css/style.css"
 menubar_toc: true
 toc_title: Contents
 hero_height: is-fullwidth
@@ -12,7 +12,6 @@ output:
   github_document:
     toc: false
     number_sections: false
-preserve_yaml: true,
 ---
 
 <link href="assets/css/style.css" rel="stylesheet">
@@ -21,7 +20,7 @@ preserve_yaml: true,
 # knitr::opts_knit$set(base.dir = 'assets')
 ```
 
-This tutorial was prepared for a quick and dirty overview of R, some of its facets, and what machine learning looks like. It is assumed that you have some knowledge of programming concepts, but not necessarily any experience with R or ML.
+This tutorial was prepared for a light overview of R, some of its capabilities, and what machine learning looks like using the {glm} and {caret} packages. It is assumed that you have some knowledge of programming concepts, maybe some statistics,, but not necessarily any experience with R or ML.
 
 # Introduction
 
@@ -371,7 +370,8 @@ mtcars %>%
     
     group_by(cyl) %>%
   
-# Now we tell R to use the grouped df to take the mean of "mpg" based on each "cyl" group, independently of one another
+# Now we tell R to use the grouped df to take the mean of "mpg" based on each "cyl" group, 
+# independently of one another
 # Lastly we just create a new column for the mean.
 # We can easily create new columns inside "summarise()"  and "mutate()" with the "=" operator
     
@@ -573,9 +573,9 @@ summary(lmodel)
 
 From this summary, we need to look at the coefficients to get an idea of what our model did, and review some statistics to evaluate it.
 
-This model created a linear relationship or linear function between the input and output. This means that the function we should expect to see will be in the form of $mx + b$ (the function of a line) where `x` is `TrackerDistance`. Our model says that:
+This model created a linear relationship or linear function between the input and output. This means that the function we should expect to see will be in the form of $mx + b$ (the function of a line) where `x` is `TrackerDistance`. Our model says that `Calories` can be best estimated by:
 
-> `Calories` can be best estimated by $118.610 \times `TrackerDistance` + 1654.77$
+> 118.610 × `TrackerDistance` + 1654.77
 
 Let's see what this looks like on a graph.
 
@@ -624,9 +624,9 @@ pmodel <- glm(Calories ~ poly(`TrackerDistance`, 3), data = fitbit)
 summary(pmodel)
 ```
 
-Here are the coefficents of a polynomial relationship between `Calories` and `TrackerDistance`. According to the model:
+Here are the coefficients of a polynomial relationship between `Calories` and `TrackerDistance`. According to the model:
 
-> $`Calories` = -1286.74 \times `TrackerDistance`^{3} + -1688.80 \times `TrackerDistance`^{2} + 14201.32 \times `TrackerDistance` + 2303.61$
+> `Calories` = -1286.74 × `TrackerDistance`³ + -1688.80 × `TrackerDistance`² + 14201.32 × `TrackerDistance` + 2303.61
 
 When coefficients are calculated, we can get an estimate of how likely they are to exist as a predictor of the output. The colloquial threshold for this is 0.05. All of the relationships show a significance ( `Pr(>|t|)` ) below this threshold.
 
@@ -692,7 +692,8 @@ To create this model, we can use `glm()` again, but this time set the `family` a
 
 y <- as.factor(fit_new$dvcal)
 
-logmodel <- glm(formula = y ~  SedentaryMinutes + LightlyActiveMinutes + FairlyActiveMinutes + VeryActiveMinutes, 
+logmodel <- glm(formula = y ~  SedentaryMinutes + LightlyActiveMinutes + 
+                  FairlyActiveMinutes + VeryActiveMinutes, 
                 data = fit_new, 
                 family = "binomial")
 
@@ -733,7 +734,7 @@ The model guessed right about 69% of the time. Lets remove `FairlyActiveMinutes`
 ```{r}
 # Create model without FairlyActiveMinutes
 
-logmodel2 <- glm(formula = y ~  SedentaryMinutes + LightlyActiveMinutes + VeryActiveMinutes, 
+logmodel2 <- glm(formula = y ~ SedentaryMinutes + LightlyActiveMinutes + VeryActiveMinutes, 
                  data = fit_new, 
                  family = "binomial")
 
@@ -750,7 +751,7 @@ cmat <- as.matrix(table(Actual_Values = y, Predicted_Values = round(pred)))
 sum(diag(cmat))/sum(cmat)
 ```
 
-The model without `FairlyyActiveMinutes` achieved a slightly better accuracy than the model with it, but does that matter? If you're interested in the benefits of model complexity, [here's an article from Forbes](https://www.forbes.com/sites/forbestechcouncil/2021/08/10/five-reasons-why-simple-models-are-a-data-scientists-best-friend/).
+The model without `FairlyActiveMinutes` achieved a slightly better accuracy than the model with it. Since we achieved a better accuracy with a simpler model, it is the clear winner. In ML, simple is almost always better. Read on to learn why.
 
 ## Case 3: Random Forest
 
@@ -803,7 +804,5 @@ forest$results$Accuracy
 ```
 
 The accuracy of the random forest model is better than the logistic regression, and we successfully improved upon the simpler model. Now, we could use this trained model to predict the class of future data.
-
-================================================================================
 
 Thanks for taking a look at this tutorial. You can check out a version of this document on [my Github Repo](https://github.com/kmarkey/HackCWRU-Workshop). Check out the [tidyverse](https://www.tidyverse.org/) and [caret](https://topepo.github.io/caret/) webpages to learn more about R, the tidyverse, and Machine Learning!
