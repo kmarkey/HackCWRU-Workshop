@@ -1,6 +1,5 @@
 ---
 layout: page
-preserve_yaml: true,
 title: R, the tidyverse, and Machine Learning
 subtitle: "CWRU Hackathon Workshop" 
 author: "Author: Keaton Markey"
@@ -14,12 +13,13 @@ output:
     toc: false
     toc_depth: 4
     number_sections: false
+preserve_yaml: true
 ---
 
 <link href="assets/css/style.css" rel="stylesheet">
 
 ```{r setup, results='hide', echo=FALSE}
-knitr::opts_knit$set(base.dir = 'assets')
+# knitr::opts_knit$set(base.dir = 'assets')
 ```
 
 This tutorial was prepared for a quick and dirty overview of R, some of
@@ -639,7 +639,7 @@ traveled according to the device `TrackerDistance`.
 ```{r}
 # Read in the csv with "read_csv()" from the tidyverse
 
-fitbit <- read_csv("../data/Daily_Activity_2022_27_02.csv")
+fitbit <- read_csv("data/Daily_Activity_2022_27_02.csv")
 
 # We can see all the classes of each column, very helpful!
 ```
@@ -704,7 +704,7 @@ ggplot(data = fitbit) +
     
     # Create a line with slope and intercept
     
-    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", lwd = 3) + 
+    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", linewidth = 3) + 
     
     # Add title and model call
     
@@ -774,9 +774,9 @@ ggplot(data = fitbit) +
     
     geom_point(aes(x = `TrackerDistance`, y = Calories)) +
     
-    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", lwd = 3) + 
+    geom_abline(slope = 118.610, intercept = 1654.77, color = "red", linewidth = 3) + 
     
-    geom_line(aes(x = `TrackerDistance`, y = pred), color = "blue", lwd = 3) +
+    geom_line(aes(x = `TrackerDistance`, y = pred), color = "blue", linewidth = 3) +
     
     # Add title and model call
     
