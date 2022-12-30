@@ -18,6 +18,36 @@ output:
 
 ```{r setup, results='hide', echo=FALSE, message=FALSE}
 # knitr::opts_knit$set(base.dir = 'assets')
+library(ggplot2)
+
+linecolor = "black"
+bgcolor = "transparent"
+knitr::opts_chunk$set(dev.args = list(bg = bgcolor))
+
+# custom theme_minimal
+my_theme <- function() {
+    theme_classic() %+replace%
+    theme(
+      panel.background = element_rect(fill=bgcolor), #transparent panel bg
+      plot.background = element_rect(fill=bgcolor),
+      legend.background = element_rect(fill=bgcolor), #transparent legend bg
+      legend.box.background = element_rect(fill=bgcolor) #transparent legend panel
+  )
+}
+
+transparent_theme <- function() {
+    theme_gray() %+replace%
+    theme(
+      panel.background = element_rect(fill=bgcolor), #transparent panel bg
+      plot.background = element_rect(fill=bgcolor),
+      panel.grid.major = element_line(color = linecolor), #remove major gridlines
+      panel.grid.minor = element_line(color = linecolor), #remove minor gridlines
+      legend.background = element_rect(fill=bgcolor), #transparent legend bg
+      legend.box.background = element_rect(fill=bgcolor) #transparent legend panel
+  )
+}
+
+theme_set(transparent_theme())
 ```
 
 This tutorial was prepared for a light overview of R, some of its capabilities, and what machine learning looks like using the {glm} and {caret} packages. It is assumed that you have some knowledge of programming concepts, maybe some statistics,, but not necessarily any experience with R or ML.
@@ -481,12 +511,15 @@ ggplot(mtcars) + geom_bar(aes(x = cyl, fill = factor(cyl)), stat = 'count') +
          y = "Count",
          title = "Histogram of Cylinders") +
     
-    # Since the default ggplot theme is bare-bones, I usually throw on a built-in theme
+    # Since the default ggplot theme is bare-bones, I usually throw on a better one
+    # I'm using a custom theme similar to theme_classic(), but modified for this website
     
-    theme_classic()
+    my_theme()
 ```
 
 Data visualization is really important for the analyst to figure out what's going on and to ensure that the information is accurately communicated to others. There are lots of industry-leading tools besides R that use can use to visualize data. More info about one of these tools can be found on [the Tableau website](https://www.tableau.com/learn/articles/data-visualization).
+
+Also, to learn how I created this custom theme, check out [this tutorial by Maddie Pickens on RPubs](https://rpubs.com/mclaire19/ggplot2-custom-themes).
 
 # Machine Learning
 
@@ -595,7 +628,7 @@ ggplot(data = fitbit) +
     
     # Add a better theme
     
-    theme_classic()
+    my_theme()
 ```
 
 How many calories would we expect someone to burn if they ran 40 miles?
@@ -653,7 +686,7 @@ ggplot(data = fitbit) +
     
     # Add a better theme
     
-    theme_classic()
+    my_theme()
 ```
 
 The polynomial model in blue seems to follow the linear model exactly until we reach a `TrackerDistance` of about 18. Then, it bends toward three points that are on the edge of the data.
@@ -682,7 +715,7 @@ ggplot(fit_new) +
     
     labs(title = "Histogram of dvcal") + 
     
-    theme_classic()
+    my_theme()
 ```
 
 To create this model, we can use `glm()` again, but this time set the `family` argument to "binomial".
