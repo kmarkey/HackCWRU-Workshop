@@ -1,3 +1,20 @@
+---
+layout: page
+title: R, the tidyverse, and Machine Learning
+subtitle: CWRU Hackathon Workshop
+description: tutorial, introduction, walk-thorugh, taste, test of R, the tidyverse, dplyr, ggplot, caret, machine learning, ml, rstudio, programming concepts and practice
+author: Keaton Markey
+date: "2022/12/28"
+menubar_toc: true
+toc_title: Contents
+hero_height: is-fullwidth
+output:
+  github_document:
+    toc: false
+    number_sections: false
+    preserve_yaml: true
+---
+
 R, the tidyverse, and Machine Learning
 ================
 Keaton Markey
@@ -254,11 +271,11 @@ matrix1
 ```
 
     ##          [,1]     [,2]
-    ## [1,] 2.879958 7.224661
-    ## [2,] 4.986080 7.185012
-    ## [3,] 4.791872 5.119443
-    ## [4,] 4.292041 6.184423
-    ## [5,] 5.596733 7.030802
+    ## [1,] 3.902756 6.202208
+    ## [2,] 2.961860 7.189675
+    ## [3,] 2.683806 6.328282
+    ## [4,] 3.957290 6.350806
+    ## [5,] 5.432997 6.886041
 
 To index this class of object, the column names and row names give us a
 pretty good idea. To get a specific element, index the row then column.
@@ -267,7 +284,7 @@ pretty good idea. To get a specific element, index the row then column.
 matrix1[3,1]
 ```
 
-    ## [1] 4.791872
+    ## [1] 2.683806
 
 Matrices can also be indexed as one-dimensional by supplying one index.
 The columns wrap to the next one.
@@ -276,13 +293,13 @@ The columns wrap to the next one.
 matrix1[6]
 ```
 
-    ## [1] 7.224661
+    ## [1] 6.202208
 
 ``` r
 matrix1[1,2]
 ```
 
-    ## [1] 7.224661
+    ## [1] 6.202208
 
 To get a full row or column, just leave the other dimension blank.
 
@@ -290,7 +307,7 @@ To get a full row or column, just leave the other dimension blank.
 matrix1[1,]
 ```
 
-    ## [1] 2.879958 7.224661
+    ## [1] 3.902756 6.202208
 
 ## Data Frames
 
@@ -311,16 +328,16 @@ dataframe1
 ```
 
     ##         col1 col2
-    ## 1   2.879958    1
-    ## 2   4.986080    2
-    ## 3   4.791872    3
-    ## 4   4.292041    4
-    ## 5   5.596733    5
-    ## 6   7.224661    6
-    ## 7   7.185012    7
-    ## 8   5.119443    8
-    ## 9   6.184423    9
-    ## 10  7.030802   10
+    ## 1   3.902756    1
+    ## 2   2.961860    2
+    ## 3   2.683806    3
+    ## 4   3.957290    4
+    ## 5   5.432997    5
+    ## 6   6.202208    6
+    ## 7   7.189675    7
+    ## 8   6.328282    8
+    ## 9   6.350806    9
+    ## 10  6.886041   10
     ## 11 78.000000   11
     ## 12 44.000000   12
 
@@ -331,8 +348,8 @@ returns a vector.
 dataframe1$col1
 ```
 
-    ##  [1]  2.879958  4.986080  4.791872  4.292041  5.596733  7.224661  7.185012
-    ##  [8]  5.119443  6.184423  7.030802 78.000000 44.000000
+    ##  [1]  3.902756  2.961860  2.683806  3.957290  5.432997  6.202208  7.189675
+    ##  [8]  6.328282  6.350806  6.886041 78.000000 44.000000
 
 You can also index like you do with matrices, but since it’s a
 dataframe, the first method is preferred.
@@ -341,8 +358,8 @@ dataframe, the first method is preferred.
 dataframe1[,1]
 ```
 
-    ##  [1]  2.879958  4.986080  4.791872  4.292041  5.596733  7.224661  7.185012
-    ##  [8]  5.119443  6.184423  7.030802 78.000000 44.000000
+    ##  [1]  3.902756  2.961860  2.683806  3.957290  5.432997  6.202208  7.189675
+    ##  [8]  6.328282  6.350806  6.886041 78.000000 44.000000
 
 ## Conditional Indexing
 
@@ -359,7 +376,7 @@ greater_than_1 <- dataframe1$col1 > 4
 greater_than_1
 ```
 
-    ##  [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+    ##  [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 
 Here, we receive a vector of boolean (True or False) values. We can use
 this vector to index the original vector. So we only receive elements
@@ -369,15 +386,15 @@ from col1 where greater_than_1 is equal to True.
 dataframe1$col1
 ```
 
-    ##  [1]  2.879958  4.986080  4.791872  4.292041  5.596733  7.224661  7.185012
-    ##  [8]  5.119443  6.184423  7.030802 78.000000 44.000000
+    ##  [1]  3.902756  2.961860  2.683806  3.957290  5.432997  6.202208  7.189675
+    ##  [8]  6.328282  6.350806  6.886041 78.000000 44.000000
 
 ``` r
 dataframe1$col1[greater_than_1]
 ```
 
-    ##  [1]  4.986080  4.791872  4.292041  5.596733  7.224661  7.185012  5.119443
-    ##  [8]  6.184423  7.030802 78.000000 44.000000
+    ## [1]  5.432997  6.202208  7.189675  6.328282  6.350806  6.886041 78.000000
+    ## [8] 44.000000
 
 This is an extremely powerful tool in base R. You can also create other
 conditionals with:
@@ -643,7 +660,7 @@ axis. We can supply our own labels too.
 plot(x = mtcars$hp, mtcars$mpg, xlab = "Horsepower", ylab = "MPG")
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-31-1.png" style="display: block; margin: auto;" />
 
 We can make a histogram too. `hist()` only takes one data argument and
 automatically counts each group. Although its the more basic of the two
@@ -675,7 +692,7 @@ title("Cylinders of mtcars",
       col.main = "black")
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-32-1.png" style="display: block; margin: auto;" />
 
 ### tidyverse
 
@@ -698,7 +715,7 @@ ggplot(mtcars) +
     geom_point(aes(x = hp, y = mpg))
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-33-1.png" style="display: block; margin: auto;" />
 
 We can make a barplot too.
 
@@ -721,7 +738,7 @@ ggplot(mtcars) + geom_bar(aes(x = cyl, fill = factor(cyl)), stat = 'count') +
     my_theme()
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-34-1.png" style="display: block; margin: auto;" />
 
 Data visualization is really important for the analyst to figure out
 what’s going on and to ensure that the information is accurately
@@ -856,7 +873,7 @@ Let’s see what our variables of interest look like.
 plot(fitbit$TrackerDistance, fitbit$Calories, xlab = "Distance", ylab = "Calories")
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-37-1.png" style="display: block; margin: auto;" />
 
 ### Linear Model
 
@@ -938,7 +955,7 @@ ggplot(data = fitbit) +
     my_theme()
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-40-1.png" style="display: block; margin: auto;" />
 
 How many calories would we expect someone to burn if they ran 40 miles?
 
@@ -1040,7 +1057,7 @@ ggplot(data = fitbit) +
     my_theme()
 ```
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-43-1.png" style="display: block; margin: auto;" />
 
 The polynomial model in blue seems to follow the linear model exactly
 until we reach a `TrackerDistance` of about 18. Then, it bends toward
@@ -1089,7 +1106,7 @@ ggplot(fit_new) +
     ## Warning in geom_histogram(aes(x = dvcal, fill = dvcal), stat = "count"):
     ## Ignoring unknown parameters: `binwidth`, `bins`, and `pad`
 
-![](hack-cwru-workshop_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
+<img src="hack-cwru-workshop_files/figure-gfm/unnamed-chunk-44-1.png" style="display: block; margin: auto;" />
 
 To create this model, we can use `glm()` again, but this time set the
 `family` argument to “binomial”.

@@ -12,6 +12,7 @@ output:
   github_document:
     toc: false
     number_sections: false
+    preserve_yaml: true
 ---
 
 <link href="assets/css/style.css" rel="stylesheet">
@@ -22,14 +23,18 @@ library(ggplot2)
 
 linecolor = "black"
 bgcolor = "transparent"
+
+# knitr options
 knitr::opts_chunk$set(dev.args = list(bg = bgcolor))
+knitr::opts_chunk$set(fig.align = "center")
 
 # custom theme_minimal
 my_theme <- function() {
+    theme_update() %+replace%
     theme_classic() %+replace%
     theme(
       panel.background = element_rect(fill=bgcolor), #transparent panel bg
-      plot.background = element_rect(fill=bgcolor),
+      plot.background = element_rect(fill=bgcolor, color = linecolor),
       legend.background = element_rect(fill=bgcolor), #transparent legend bg
       legend.box.background = element_rect(fill=bgcolor) #transparent legend panel
   )
@@ -38,12 +43,12 @@ my_theme <- function() {
 transparent_theme <- function() {
     theme_gray() %+replace%
     theme(
-      panel.background = element_rect(fill=bgcolor), #transparent panel bg
-      plot.background = element_rect(fill=bgcolor),
-      panel.grid.major = element_line(color = linecolor), #remove major gridlines
-      panel.grid.minor = element_line(color = linecolor), #remove minor gridlines
+      panel.background = element_rect(fill=bgcolor, color = linecolor), #transparent panel bg
+      plot.background = element_rect(fill=bgcolor, color = linecolor),
+      panel.grid.major = element_line(color = bgcolor), #remove major gridlines
+      panel.grid.minor = element_line(color = bgcolor), #remove minor gridlines
       legend.background = element_rect(fill=bgcolor), #transparent legend bg
-      legend.box.background = element_rect(fill=bgcolor) #transparent legend panel
+      legend.box.background = element_rect(fill=linecolor) #transparent legend panel
   )
 }
 
